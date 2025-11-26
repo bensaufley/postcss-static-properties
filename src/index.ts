@@ -26,7 +26,6 @@ const plugin = (({ variables = {} } = {}) => {
       decl.value = decl.value.replace(
         /var\([\s\n]*(--[^,)\s\n]+)(?:,[\s\n]*(.+))?,?[\s\n]*\)/gim,
         (match: string, varName: string, fallback: string | undefined) => {
-          console.log({ match, varName, fallback });
           if (!(varName in standardVars)) return match;
 
           const val = standardVars[varName];

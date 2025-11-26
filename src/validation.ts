@@ -13,11 +13,7 @@ export const invalidValues = (variables: Record<string, string>): string[] =>
       });
       const decl = parsed.nodes[0] as postcss.Declaration;
       const parsedValue = decl.value;
-      if (parsedValue.trim() !== value.trim()) {
-        console.log({ parsedValue, value });
-        return true;
-      }
-      return false;
+      return parsedValue.trim() !== value.trim();
     } catch (ex) {
       return true;
     }
