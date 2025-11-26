@@ -1,11 +1,16 @@
 {
   "name": "postcss-static-properties",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "PostCSS plugin to bake the values of enumerated custom properties",
-  "keywords": ["postcss", "css", "postcss-plugin", "postcss-static-properties"],
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "postcss-static-properties"
+  ],
   "scripts": {
-    "unit": "node --test index.test.js",
-    "test": "npm run unit && eslint ."
+    "unit": "tsx --test src/index.test.ts",
+    "test": "npm run unit"
   },
   "author": "Ben Saufley <contact@bensaufley.com>",
   "license": "MIT",
@@ -17,17 +22,17 @@
     "postcss": "^8.4.27"
   },
   "devDependencies": {
-    "eslint": "^8.47.0",
-    "postcss": "^8.4.27"
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "postcss": "^8.4.27",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   },
-  "eslintConfig": {
-    "parserOptions": {
-      "ecmaVersion": 2017
-    },
-    "env": {
-      "node": true,
-      "es6": true
-    },
-    "extends": ["eslint:recommended"]
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   }
 }

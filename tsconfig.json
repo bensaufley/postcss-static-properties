@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "strict": true,
+    "declaration": true,
+    "baseUrl": "./src",
+    "outDir": "./dist",
+  },
+  "files": [
+    "./src/index.ts",
+    "./src/validation.ts"
+  ]
+}
