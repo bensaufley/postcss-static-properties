@@ -29,11 +29,7 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },
-  "type": "module",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  }
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module"
 }
