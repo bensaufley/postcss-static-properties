@@ -1,6 +1,6 @@
 {
   "name": "postcss-static-properties",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "PostCSS plugin to bake the values of enumerated custom properties",
   "keywords": [
     "postcss",
