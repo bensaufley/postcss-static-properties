@@ -10,13 +10,14 @@
   ],
   "scripts": {
     "unit": "tsx --test src/index.test.ts",
-    "test": "npm run unit"
+    "test": "npm run unit",
+    "build": "NODE_ENV=production tsc"
   },
   "author": "Ben Saufley <contact@bensaufley.com>",
   "license": "MIT",
   "repository": "https://github.com/bensaufley/postcss-static-properties",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "peerDependencies": {
     "postcss": "^8.4.27"

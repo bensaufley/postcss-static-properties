@@ -7,3 +7,8 @@ yarn.lock
 .github
 .editorconfig
 coverage/
+src
+eslint.config.ts
+.vscode
+.prettierrc
+tsconfig.json
