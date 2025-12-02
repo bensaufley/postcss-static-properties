@@ -12,3 +12,4 @@ eslint.config.ts
 .vscode
 .prettierrc
 tsconfig.json
+.github
