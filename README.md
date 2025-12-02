@@ -22,7 +22,8 @@ increasingly moving toward writing spec-compliant and spec-adjacent CSS, and
 leaving behind the entirely-distinct syntaxes of things like SASS and LESS. One
 example is that [Stylelint] is built to accept a lot of the things PostCSS
 brings to the table—but, notably, not `$dollarVariables`. This plugin aims to
-bridge tht gap, allowing
+bridge that gap, allowing reusable consts that are resolved at build time,
+without breaking the spec.
 
 ## Options
 
