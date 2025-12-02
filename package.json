@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "clean-publish": "^6.0.1",
     "eslint": "^9.39.1",
     "postcss": "^8.4.27",
     "tsx": "^4.20.6",
