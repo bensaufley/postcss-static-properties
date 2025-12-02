@@ -177,3 +177,40 @@ it('namespaces variables with a custom divider', async () => {
     }
   );
 });
+
+it('works as a fallback for a true custom property', async () => {
+  await run(
+    `
+    a {
+      color: var(--customColor, var(--ns--color--primary));
+      font-weight: var(
+        --customWeight,
+        var(--ns--font--weight),
+      );
+      font-size: var(--fontSize, 1rem);
+    }
+    `,
+    `
+    a {
+      color: var(--customColor, #333);
+      font-weight: var(
+        --customWeight,
+        700,
+      );
+      font-size: var(--fontSize, 1rem);
+    }
+    `,
+    {
+      variables: {
+        ns: {
+          color: {
+            primary: '#333',
+          },
+          font: {
+            weight: '700',
+          },
+        },
+      },
+    }
+  );
+});
