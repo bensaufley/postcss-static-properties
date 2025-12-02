@@ -2,8 +2,10 @@ import type { PluginCreator } from 'postcss';
 
 import { invalidKeys, invalidMessage, invalidValues, standardize } from './validation.js';
 
+export type PropertyValue = string | number;
+
 export interface Namespace {
-  [k: string]: Namespace | string | null | undefined;
+  [k: string]: Namespace | PropertyValue | null | undefined;
 }
 
 export interface Opts {
@@ -13,7 +15,7 @@ export interface Opts {
 }
 
 const plugin = (({ namespaceSeparator = '--', variables = {} } = {}) => {
-  const standardVars: Record<string, string> = standardize(variables, namespaceSeparator);
+  const standardVars: Record<string, PropertyValue> = standardize(variables, namespaceSeparator);
   const varNames = Object.keys(standardVars);
 
   const invalidVarNames = invalidKeys(standardVars);
@@ -43,7 +45,7 @@ const plugin = (({ namespaceSeparator = '--', variables = {} } = {}) => {
             );
           }
 
-          return val;
+          return val.toString();
         }
       );
     },

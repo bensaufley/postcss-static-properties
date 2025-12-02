@@ -107,6 +107,14 @@ it('handles null/undefined variable values', async () => {
   });
 });
 
+it('handles numeric values', async () => {
+  await run('a{ foo: var(--num); }', 'a{ foo: 42; }', {
+    variables: {
+      num: 42,
+    },
+  });
+});
+
 it('namespaces variables', async () => {
   await run(
     `
