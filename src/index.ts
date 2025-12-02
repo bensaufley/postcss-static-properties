@@ -2,12 +2,18 @@ import type { PluginCreator } from 'postcss';
 
 import { invalidKeys, invalidMessage, invalidValues, standardize } from './validation.js';
 
-export interface Opts {
-  variables?: Record<string, string>;
+export interface Namespace {
+  [k: string]: Namespace | string | null | undefined;
 }
 
-const plugin = (({ variables = {} } = {}) => {
-  const standardVars: Record<string, string> = standardize(variables);
+export interface Opts {
+  /** @default '--'' */
+  namespaceSeparator?: string;
+  variables?: Namespace;
+}
+
+const plugin = (({ namespaceSeparator = '--', variables = {} } = {}) => {
+  const standardVars: Record<string, string> = standardize(variables, namespaceSeparator);
   const varNames = Object.keys(standardVars);
 
   const invalidVarNames = invalidKeys(standardVars);

@@ -1,6 +1,6 @@
 import postcss from 'postcss';
 import { equal } from 'node:assert';
-import { test } from 'node:test';
+import { test as it } from 'node:test';
 
 import plugin, { type Opts } from './index.js';
 
@@ -13,7 +13,7 @@ async function run(input: string, output: string, opts: Opts = {}, warnings = 0)
   equal(result.warnings().length, warnings);
 }
 
-test('applies simple replacement', async () => {
+it('applies simple replacement', async () => {
   await run('a{ foo: var(--blah); }', 'a{ foo: #fff; }', {
     variables: {
       '--blah': '#fff',
@@ -21,7 +21,7 @@ test('applies simple replacement', async () => {
   });
 });
 
-test('applies multiline replacement', async () => {
+it('applies multiline replacement', async () => {
   await run(
     `
     a {
@@ -50,7 +50,7 @@ test('applies multiline replacement', async () => {
   );
 });
 
-test('warns for inappropriate fallback', async () => {
+it('warns for inappropriate fallback', async () => {
   const input = `
     a {
       foo: var(--blah, blue);
@@ -78,7 +78,7 @@ test('warns for inappropriate fallback', async () => {
   );
 });
 
-test('does not replace unknown variable', async () => {
+it('does not replace unknown variable', async () => {
   await run('a{ foo: var(--unknown); }', 'a{ foo: var(--unknown); }', {
     variables: {
       '--blah': '#fff',
@@ -86,11 +86,11 @@ test('does not replace unknown variable', async () => {
   });
 });
 
-test('does not replace when no variables provided', async () => {
+it('does not replace when no variables provided', async () => {
   await run('a{ foo: var(--blah); }', 'a{ foo: var(--blah); }');
 });
 
-test('accepts variables without -- prefix', async () => {
+it('accepts variables without -- prefix', async () => {
   await run('a{ foo: var(--blah); }', 'a{ foo: rgb(128 128 255 / 50%); }', {
     variables: {
       blah: 'rgb(128 128 255 / 50%)',
@@ -98,13 +98,74 @@ test('accepts variables without -- prefix', async () => {
   });
 });
 
-test('handles null/undefined variable values', async () => {
+it('handles null/undefined variable values', async () => {
   await run('a{ foo: var(--null); bar: var(--undef); }', 'a{ foo: ; bar: ; }', {
     variables: {
-      // @ts-expect-error
       null: null,
-      // @ts-expect-error
       undef: undefined,
     },
   });
+});
+
+it('namespaces variables', async () => {
+  await run(
+    `
+    a {
+      foo: var(--ns--color--primary);
+      bar: var(--ns--small);
+      baz: var(--root);
+    }
+    `,
+    `
+    a {
+      foo: #333;
+      bar: 8px;
+      baz: 100%;
+    }
+    `,
+    {
+      variables: {
+        root: '100%',
+        ns: {
+          color: {
+            primary: '#333',
+          },
+          small: '8px',
+        },
+      },
+    }
+  );
+});
+
+it('namespaces variables with a custom divider', async () => {
+  await run(
+    `
+    a {
+      blah: var(--ns--color--primary);
+      foo: var(--ns__color__primary);
+      bar: var(--ns__small);
+      baz: var(--root);
+    }
+    `,
+    `
+    a {
+      blah: var(--ns--color--primary);
+      foo: #333;
+      bar: 8px;
+      baz: 100%;
+    }
+    `,
+    {
+      namespaceSeparator: '__',
+      variables: {
+        root: '100%',
+        ns: {
+          color: {
+            primary: '#333',
+          },
+          small: '8px',
+        },
+      },
+    }
+  );
 });

@@ -1,8 +1,16 @@
-import postcss, { type Declaration } from 'postcss';
+import postcss from 'postcss';
 
-export const standardize = (variables: Record<string, string>): Record<string, string> =>
+import type { Namespace } from 'index.js';
+
+const nest = (obj: Namespace, separator: string, prefix: string = ''): readonly (readonly [string, string])[] =>
+  Object.entries(obj).flatMap(([key, value]) => {
+    if (value && typeof value === 'object') return nest(value, separator, `${prefix}${key}${separator}`);
+    return [[`${prefix}${key}`, value ?? '']];
+  });
+
+export const standardize = (variables: Namespace, separator: string): Record<string, string> =>
   Object.fromEntries(
-    Object.entries(variables).map(([key, value]) => [key.startsWith('--') ? key : `--${key}`, (value ?? '').toString()])
+    nest(variables, separator).map(([key, value]) => [key.startsWith('--') ? key : `--${key}`, value])
   );
 
 export const invalidValues = (variables: Record<string, string>): string[] =>
